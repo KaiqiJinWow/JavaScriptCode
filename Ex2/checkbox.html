@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jason's Notebook</title>
+</head>
+</head>
+<body style="margin:40px" onload="loadpage()">
+<h2>动态表格</h2><hr><br>
+<table id="inputTb" border="1" bordercolor="#4682B4" cellspacing="0" align="right">
+    <tr>
+        <td>
+            新增行数:&nbsp;<input type="text" name="rownum" id="rownum" size="2" maxlength="2" >
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="增加" onclick="addRow()">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="删除" id="delete" onclick="deleteRow()" disabled="true">
+        </td>
+    </tr>
+</table>
+<table id="mainTb" border="1" bordercolor="#4682B4" cellspacing="0" >
+    <tbody id="mainBody">
+    <tr id="rownumber0">
+        <td align="center">
+            <input type="Checkbox" name="checkbox" onclick="checkBoxSel()">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+    </tr>
+    <tr id="rownumber1">
+        <td align="center">
+            <input type="Checkbox" name="checkbox" onclick="checkBoxSel()">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+        <td>
+            <input type="text" name="newCarName" size="9">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+<script language="JavaScript">
+    // 新增行
+    function addRow(){
+        var textNum = document.getElementById("rownum");
+        // 得到新增行记录的行数
+        var index = textNum.value;
+        if(!checknum(index)){
+            alert("You can only input number in the TEXT!");
+            textNum.focus();
+            textNum.select();
+        }
+        for(var i = 0; i < index; i++){
+            // 得到表格对象
+            var tableObj = document.getElementById("mainTb");
+            // 得到tbody对象
+            var tableBodyObj = document.getElementById("mainBody");
+            var newRowObj = document.createElement("tr");
+            var newCheckBox = document.createElement("td");
+            var newtext1 = document.createElement("td");
+            var newtext2 = document.createElement("td");
+            var newtext3 = document.createElement("td");
+            newCheckBox.innerHTML = '<center><input type="Checkbox" name="checkbox" onclick = "checkBoxSel()"></center>';
+            newtext1.innerHTML = '<input type="text" name="newCarName" size="9">';
+            newtext2.innerHTML = '<input type="text" name="newCarName" size="9">';
+            newtext3.innerHTML = '<input type="text" name="newCarName" size="9">';
+            // 新增的tr节点下增加td节点
+            newRowObj.appendChild(newCheckBox);
+            newRowObj.appendChild(newtext1);
+            newRowObj.appendChild(newtext2);
+            newRowObj.appendChild(newtext3);
+            // tbody节点下增加tr节点
+            tableBodyObj.appendChild(newRowObj);
+        }
+    }
+    // 新增行数选择框检查输入必须是数字
+    function checknum(strVal){
+        if (strVal.length != 0){
+            var r = strVal.match(new RegExp(/^[0-9]+$/));
+            if (r == null){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
+    }
+    // 批量删除指定的行
+    function deleteRow(){
+        var Tblen;
+        // 得到所有 checkbox 对象
+        var checkbox = document.getElementsByName("checkbox");
+        //var checkboxlen = document.all.checkbox.length;
+        // 得到所有提交的checkbox个数
+        var checkboxlen = checkbox.length;
+        var ischecked;
+        // 得到删除按钮对象
+        var delbutton = document.getElementById("delete");
+        for (var i=0; i < checkboxlen; i++){
+            // 得到表格行数
+            Tblen = this.mainTb.rows.length;
+            // 最终保留一行记录
+            if (Tblen == 1)
+            {
+                document.getElementsByName("checkbox")[0].checked = false;
+                alert("A line have to be saved in the ID of mainTb!");
+                // 删除按钮不可用
+                delbutton.disabled = true;
+                return false;
+            }
+            ischecked = checkbox[i].checked;
+            // 如果当前的checkbox选中：删除当前节点，由于删除节点后，下面的节点上移，游标（记录行指针）也应该上移
+            if (ischecked)
+            {
+                // document.all("mainTb").deleteRow(i);
+                document.getElementById("mainTb").deleteRow(i);
+                // 游标（记录行指针）上移
+                i--;
+            }
+            // 重新统计checkbox个数
+            checkboxlen = checkbox.length;
+        }
+        // 删除操作后按钮状态是不可用
+        delbutton.disabled = true;
+    }
+    // checkbox按钮单击事件处理函数：是否至少选中一行记录，是可以删除操作；如果没有选择，删除按钮不可用
+    function checkBoxSel(){
+        // 得到删除按钮对象
+        var delbutton = document.getElementById("delete");
+        if(checkselect()){
+            delbutton.disabled = false;
+        }else{
+            delbutton.disabled = true;
+        }
+    }
+
+    function checkselect(){
+        // 得到所有 checkbox 对象
+        var checkbox = document.getElementsByName("checkbox");
+        // 得到所有提交的checkbox个数
+        var chklength = checkbox.length;
+        var flag = false;
+        for(var i = 0; i < chklength; i++)
+        {
+            if(checkbox[i].checked == true)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if(flag == true)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    // 页面加载body内容时执行
+    function loadpage(){
+        var delbutton = document.getElementById("delete");
+        var rownum = document.getElementById("rownum");
+        //初始“删除”按钮不可用
+        delbutton.disabled = true;
+        // 初始行数输入框内容为空
+        rownum.value = "";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+body{
+    margin:0px;
+    bottom: 0px;
+}
+#div{
+    position:absolute;
+    width:99%;
+    height:99%;
+    right:0.5%;
+    left:0.5%;
+    top:0.5%;
+    bottom:0.5%;
+//border:none;
+}
+#top-div{
+    position:absolute;
+    height: calc(100% - 200px);
+    //height: 60px;
+    width:100%;
+    border:none;
+}
+#top-div-left{
+    position:absolute;
+    width:70%;
+    //left:0px;
+    //padding-left: 15px;
+    height:100%;
+}
+#top-div-right{
+    position:absolute;
+    left:70%;
+    width:30%;
+    height:100%
+
+
+}
+#bottom-div{
+//border-top:none;
+    position:absolute;
+    height:200px;
+    top: calc(100% - 200px);
+    //bottom:0%;
+    width:100%;
+}
+div
+{
+    border:1px solid;
+}
+input[type = button]:active{
+
+}

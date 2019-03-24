@@ -1,0 +1,46 @@
+#div{
+    position:absolute;
+    width:99%;
+    height:99%;
+    right:0.5%;
+    left:0.5%;
+    top:0.5%;
+    bottom:0.5%;
+    //border:none;
+}
+#top-div{
+    position:absolute;
+    height:80%;
+    width:100%;
+    border:none;
+}
+#top-div-left{
+    position:absolute;
+    width:70%;
+    //left:0px;
+
+    height:100%;
+}
+#top-div-right{
+    //border-left:none;
+    position:absolute;
+    left:70%;
+    width:30%;
+    height:100%
+
+
+}
+#bottom-div{
+    //border-top:none;
+    position:absolute;
+    height:20%;
+    top:80%;
+    width:100%;
+}
+div
+{
+    border:1px solid;
+}
+input[type = button]:active{
+
+}
